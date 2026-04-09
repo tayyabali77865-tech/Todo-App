@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taskify - Modern Task Management</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <header class="app-header">
+            <div class="header-content">
+                <h1>Task</h1>
+                <p id="current-date">Today</p>
+            </div>
+            <div class="header-stats">
+                <span id="task-count">0 tasks</span>
+            </div>
+        </header>
+
+        <form id="todo-form" class="input-section">
+            <div class="input-wrapper">
+                <input type="text" id="todo-input" placeholder="What needs to be done?" autocomplete="off">
+            </div>
+            <button type="submit" id="add-btn" class="btn-primary">
+                <i class="fas fa-plus"></i>
+            </button>
+        </form>
+
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">Pending</button>
+            <button class="filter-btn" data-filter="active">Active</button>
+            <button class="filter-btn" data-filter="completed">Completed</button>
+        </div>
+
+        <div class="list-container">
+            <ul id="todo-list" class="todo-list">
+                <!-- Todo items will be inserted here dynamically -->
+            </ul>
+            <div id="empty-state" class="empty-state hidden">
+                <i class="fa-regular fa-clipboard"></i>
+                <p>No tasks found. Time to relax!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal (Hidden by default) -->
+    <div id="edit-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>Edit Task</h2>
+            <form id="edit-form">
+                <input type="text" id="edit-input" autocomplete="off">
+                <div class="modal-actions">
+                    <button type="button" id="cancel-edit-btn" class="btn-text">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
