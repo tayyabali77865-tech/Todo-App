@@ -1,10 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // State
     let todos = JSON.parse(localStorage.getItem('taskify-todos')) || [];
     let currentFilter = 'all';
     let editingId = null;
 
-    // DOM Elements
     const form = document.getElementById('todo-form');
     const input = document.getElementById('todo-input');
     const list = document.getElementById('todo-list');
@@ -13,20 +11,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentDate = document.getElementById('current-date');
     const filterBtns = document.querySelectorAll('.filter-btn');
     
-    // Modal Elements
     const editModal = document.getElementById('edit-modal');
     const editForm = document.getElementById('edit-form');
     const editInput = document.getElementById('edit-input');
     const cancelEditBtn = document.getElementById('cancel-edit-btn');
 
-    // Display Current Date
     const options = { weekday: 'long', month: 'short', day: 'numeric' };
     currentDate.textContent = new Date().toLocaleDateString('en-US', options);
 
-    // Initial Render
     renderTodos();
 
-    // Add Task
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         const text = input.value.trim();
@@ -43,21 +37,18 @@ document.addEventListener('DOMContentLoaded', () => {
             saveAndRender();
             input.value = '';
             
-            // Subtle animation on the add button
             const addBtn = document.getElementById('add-btn');
             addBtn.style.transform = 'scale(0.9)';
             setTimeout(() => addBtn.style.transform = '', 150);
         }
     });
 
-    // List Event Delegation (Complete, Edit, Delete)
     list.addEventListener('click', (e) => {
         const item = e.target.closest('.todo-item');
         if (!item) return;
         
         const id = item.dataset.id;
 
-        // Toggle Complete
         if (e.target.closest('.checkbox-container')) {
             const todo = todos.find(t => t.id === id);
             if (todo) {
@@ -66,16 +57,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Delete Task
         if (e.target.closest('.delete-btn')) {
             item.classList.add('removing');
             setTimeout(() => {
                 todos = todos.filter(t => t.id !== id);
                 saveAndRender();
-            }, 300); // Matches animation duration
+            }, 300);
         }
 
-        // Edit Task
         if (e.target.closest('.edit-btn')) {
             const todo = todos.find(t => t.id === id);
             if (todo) {
@@ -87,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Edit Modal Logic
     editForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const newText = editInput.value.trim();
@@ -113,7 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
         editInput.value = '';
     }
 
-    // Filters
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             filterBtns.forEach(b => b.classList.remove('active'));
@@ -123,7 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Core Functions
     function saveAndRender() {
         localStorage.setItem('taskify-todos', JSON.stringify(todos));
         renderTodos();
